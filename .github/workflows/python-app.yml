@@ -31,12 +31,11 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         mkdir -p artifacts/
         python ./dcbc/DCBCScraper.py
-        mv artifacts/dcbc.csv artifacts/dcbc-${{steps.date.outputs.date}}.csv
     - name: Upload DCBC CSV
       uses: actions/upload-artifact@v2
       with:
          name: 'DCBC (${{steps.date.outputs.date}}) CSV Artifact'
-         path: artifacts/dcbc-${{steps.date.outputs.date}}.csv
+         path: artifacts/DrugCheckingBC Full Data - ${{steps.date.outputs.date}}.csv
     - name: Create a Release
       id: create_release
       uses: actions/create-release@v1
@@ -53,6 +52,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-        asset_path: artifacts/dcbc-${{steps.date.outputs.date}}.csv
-        asset_name: dcbc-${{steps.date.outputs.date}}.csv
+        asset_path: artifacts/DrugCheckingBC Full Data - ${{steps.date.outputs.date}}.csv
+        asset_name: DrugCheckingBC Full Data - ${{steps.date.outputs.date}}.csv
         asset_content_type: 'text/csv'
