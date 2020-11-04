@@ -43,8 +43,8 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-          tag_name: ${{ github.ref }}-${{steps.date.outputs.date}}
-          release_name: DCBC CSV ${{steps.date.outputs.date}}
+          tag_name: ${{ github.ref }}-${{steps.date.outputs.date}}-github-action
+          release_name: DrugChecking BC Complete Test Data - (${{steps.date.outputs.date}})
 
     - name: Upload Release Asset
       id: upload-release-asset 
