@@ -6,9 +6,11 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 # If Cloudflare ever comes up...
+USING_CLOUDSCRAPER = False
 try:
     import cloudscraper
     requests.session = cloudscraper.create_scraper
+    USING_CLOUDSCRAPER = True
 except:
     pass
 
@@ -22,9 +24,11 @@ class DrugCheckingBCScraper:
         self.ajax_url = "wp-admin/admin-ajax.php"
         self.url = self.base_url + self.ajax_url
         self.session = requests.session()
+        if not USING_CLOUDSCRAPER:
+            self.session.headers.update({"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"})
+
         self.session.headers.update(
             {
-                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36",
                 "referer": "https://drugcheckingbc.ca/results/",
                 "accept": "*/*",
                 "authority": "drugcheckingbc.ca",
